@@ -31,7 +31,7 @@ class HubMgCom{
 	 	foreach(self::$dftEvts as $evt)
 	 	 	$s->addHandler($evt, array($this, "pmEvt"));
 	}
-	public function registerMinigame($data){
+	public function registerMinigame(HubInterface $data){
 	 	self::$mgItfs=$data;
 	}
 }
