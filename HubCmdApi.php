@@ -42,6 +42,6 @@ class HubCmdApi implements Plugin{
 		
 	}
 	public function sortAlpha(){
-		
+		ksort($this->cmds, SORT_NATURAL, SORT_FLAG_CASE);
 	}
 }
