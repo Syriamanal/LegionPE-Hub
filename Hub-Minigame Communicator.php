@@ -38,12 +38,14 @@ class HubMgCom{
 			//player-related
 			case "player.block.touch":
 			if($data["type"]==="break"){
-				
+				$this->plyrEctToMg($data["target"]->level, "destroyBlock", $data["player"], array($data["item"], $data["target"]));
 				//onDestroyBlock
 			}else{
+				$this->plyrEvtToMg($data["target"]->level, "useItem", $data["player"], array($data["item"], $data["target"]));
 				//onUseItem
 			}
 			break;case "player.interact":
+				$this->plyrEvtToMg($data["player"]->entity->level, "attackHook", $data["player"], array($data["entity"]));
 				//onAttack
 			break;case "player.chat":
 				//onChat

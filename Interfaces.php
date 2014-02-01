@@ -8,16 +8,21 @@ interface HubInterface{
 	public function getName();
 	public function getMaxPlayers();
 	public function getJoinStatus();
-	public function getLevelNames();
+	public function getWorldNames();
 	public function getPlayersList();
+	public function pmPlayerEvt($evt, Player $player, $data);
 }
 
 interface MinigameTournament{
 	
 }
 
-class MinigameToolkit{
-
+class MgTool{//static
+	public static function getTeam($p){
+		return $this->getProfile($p)->get("team");
+	}
+	public static function getProfile($p){
+		return HubMasterPlugin::get()->getProfile("$p");
 }
 
 class PlayerProfile extends Config{
@@ -52,5 +57,8 @@ class PlayerAssistant{
 	}
 	public function tell($msg){
 		$this->client->sendChat($msg);
+	}
+	public function __toString(){
+		return $this->client->username;
 	}
 }
