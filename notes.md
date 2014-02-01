@@ -1,2 +1,4 @@
 ##TODOs
-* *** events!!!
+* ★ events!!!
+* implement dynamic signs
+* pvp plugin
