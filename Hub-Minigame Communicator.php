@@ -19,7 +19,6 @@ class HubMgCom{
 		"player.interact",
 		"player.move",
 		"tile.update",
-		"console.command",
 		"player.equipment.change",
 		"entity.explosion",
 		"player.death",
@@ -67,6 +66,9 @@ class HubMgCom{
 			break;
 		}
 		return !ModPE::$prvtDft;
+	}
+	public function registerCmd($cmd, $desc, $isWl){
+		
 	}
 	public function registerMinigame(HubInterface $data){
 	 	self::$mgItfs=$data;

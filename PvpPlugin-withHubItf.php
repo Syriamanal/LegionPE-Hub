@@ -1,26 +1,16 @@
 <?php
 /*
-class=TooSimpleKillCounter
-name=TooSimpleKillCounter
-description=Too simple. Should I make it as a tutorial?
+name=PvpMgPlugin
 author=PEMapModder
-version=0
+version=1.0
 apiversion=11,12
+class=PvpHubInterface
 */
 class TooSimpleKillCounter implements Plugin{
 	private $players=array(), $plusPlayers=array(), $normHeal, $plusHealExtra, $vips=array(), $vipPlus=array (), $vipStars=array(), $staffs=array ();
 	public function __construct (ServerAPI $a, $s=0){}
 	public function init (){
-	 	$s=ServerAPI::request ();
-	 	$s->addHandler("player.death", array($this, "onKill");
-	 	$s->addHandler("player.spawn", array($this, "onSpawn"));
-	 	$s->addHandler("player.chat", array($this, "onChat"));
-	 	$s->addHandler("player.respawn", array($this, "equip")); "onRespawn"));
-	 	$s->addHandler("item.drop", array($this, "onItemDrop"));
-	 	$c=$s->api->console;
-	 	$c->register("pvp", "pvp kit", array($this, "pvpCmd"));
-	 	$c->register("kills", "your kills", array ($this, "killsCmd"));
-	 	$config=new Config(
+	 	$s=ServerAPI::request ();$config=new Config(
 ServerAPI::request()->api->plugin->configPath($this)."config.yml", CONFIG_YAML,
 array(
 	"IO interval in seconds"=>300,
@@ -130,10 +120,24 @@ array(
 	}
 }
 
-class PvpHubInterface implements HubInterface{
+class PvpHubInterface implements HubInterface, Plugin{
+	private $p;
+	public function __construct(ServerAPI $a, $s=0){
+		$this->p=new TooSimpleKillCounter($a);
+	}
+	public function __destruct (){
+		$this->p->__destruct();
+	}
+	public function init (){
+		ServerAPI::request()->handle("hub.minigame.register", $this);
+		$this->p->init();
+	}
 	public $clnts;
 	public function receivePlayerJoin(Player $p){
-		
+		return $this->p->onSpawn($p);
+	}
+	public function getTnmtsCount(){
+		return 1;
 	}
 	public function getName(){
 		return "PvP";
@@ -152,5 +156,18 @@ class PvpHubInterface implements HubInterface{
 	}
 	public function pmPlayerEvt($evt, Player $player, $data){
 		
+	}
+	public function cmdHandler($cmd, $args, $issuer){
+	switch($cmd){
+	case "pvp":
+		
+	break;case "kills":
+		
+	break;
+	}
+	}
+	public function registerCmds($com){
+		$com->registerCmd("pvp", "pvp kit", true);
+		$com->registerCmd("kills", "your total kills", true);
 	}
 }

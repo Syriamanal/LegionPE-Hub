@@ -11,6 +11,7 @@ interface HubInterface{
 	public function getWorldNames();
 	public function getPlayersList();
 	public function pmPlayerEvt($evt, Player $player, $data);
+	public function cmdHandler($cmd, $args, $issuer);
 }
 
 interface MinigameTournament{
