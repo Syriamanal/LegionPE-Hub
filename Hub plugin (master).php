@@ -1,5 +1,6 @@
 <?php
 /*
+__PocketMine Plugin__
 class=HubMasterPlugin
 name=Hub
 author=PEMapModder
@@ -25,7 +26,9 @@ class HubMasterPlugin implements Plugin{
 		
 	}
 	public function init(){
-		$this->com=new HubMgCon();
+		ServerAPI:: request ()->api->loadAPI("ranks", "HubRanksAPI");
+		ServerAPI::request()->api->loadAPI("cmd", "HubCmdsAPI");
+		$this->com=new HubMgCom();
 		self::setInstance($this);
 		ServerAPI::request ()->addHandler("player.spawn", array($this, "initPlayer"), 3);
 		ServerAPI:: request ()->addHandler("player.quit", array($this, "finalizePlayer"), 7);

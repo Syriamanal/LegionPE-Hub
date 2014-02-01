@@ -1,17 +1,7 @@
 <?php
 
-/*
-name=CommandsHandler
-author=PEMapModder
-version=1
-apiversion=11,12
-class=HubCmdApi
-*/
-
-class HubCmdApi implements Plugin{
+class HubCmdsAPI{
 	public $cmds=array();
-	public function __construct (ServerAPI $a, $s=0){}
-	public function __destruct(){}
 	public function init(){
 		ServerAPI:: request ()->addHandler("server.start", array($this, "initialize"), 101);
 	}

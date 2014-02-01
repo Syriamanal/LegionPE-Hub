@@ -1,5 +1,6 @@
 <?php
 /*
+__PocketMine Plugin__
 name=PvpMgPlugin
 author=PEMapModder
 version=1.0
