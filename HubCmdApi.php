@@ -19,7 +19,7 @@ class HubCmdApi implements Plugin{
 		$c=ServerAPI::request()->api->console;
 		$c->register("help", "[page] Help page on commands ", array($this, "helper"));
 		foreach($c->cmds as $cmd=>$callback)
-			$this->registerCmd($cmd, $c->help[$cmd], false, $callback);
+			$this->registerCmd($cmd, $c->help[$cmd], $s->api->ban->cmdWhitelist[$cmd], $callback);
 		$this->sortAlpha();
 	}
 	public function registerCmd($c, $desc, $isWl, $callback){
