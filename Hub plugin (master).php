@@ -1,12 +1,14 @@
 <?php
+
 /*
 __PocketMine Plugin__
 class=HubMasterPlugin
-name=Hub
+name=Hub__SimpleNameButLongPlugin
 author=PEMapModder
 version=alpha 0.0
 apiversion=11,12
 */
+
 /*
 Copyright © PEMapModder 2014
 This software can only be used with prior permission from @PEMapModder at https://github.com or http://forums.pocketmine.net, or from @MCPE_moodder_for_maps at http://minecraftforum.net
@@ -26,12 +28,12 @@ class HubMasterPlugin implements Plugin{
 		
 	}
 	public function init(){
-		ServerAPI:: request ()->api->loadAPI("ranks", "HubRanksAPI");
-		ServerAPI::request()->api->loadAPI("cmd", "HubCmdsAPI");
-		$this->com=new HubMgCom();
 		self::setInstance($this);
-		ServerAPI::request ()->addHandler("player.spawn", array($this, "initPlayer"), 3);
-		ServerAPI:: request ()->addHandler("player.quit", array($this, "finalizePlayer"), 7);
+		$this->com=new HubMgCom();//now, let's worry about whether this is set correctly.
+		ServerAPI::request()->api->loadAPI("ranks", "HubRanksApi", FILE_PATH."plugins/");
+		ServerAPI::request()->api->loadAPI("cmd", "HubCmdApi", FILE_PATH."plugins/");
+		ServerAPI::request()->addHandler("player.spawn", array($this, "initPlayer"), 3);
+		ServerAPI::request()->addHandler("player.quit", array($this, "finalizePlayer"), 7);
 	}
 	public function initPlayer(Player $p){
 		$this->playerProfiles["$p"]=new PlayerProfile($p);
@@ -41,5 +43,12 @@ class HubMasterPlugin implements Plugin{
 	}
 	public function getProfile($ign){
 		return (isset($this->playerProfiles["$p"])?$this->playerProfiles["$p"]:false);
+	}
+	public function getPlayerMinigame($p){
+		if(!($p instanceof Player))$p=ServerAPI::request()->api->player->get("$p");
+		if(isset($p->entity) and isset($p->entity->level)){
+			return $this->com->getMinigameByLevel($p->entity->level);
+		}
+		return false;
 	}
 }

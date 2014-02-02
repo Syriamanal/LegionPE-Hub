@@ -1,4 +1,5 @@
 <?php
+
 /*
 Copyright © PEMapModder 2014
 This software can only be used with prior permission from @PEMapModder at https://github.com or http://forums.pocketmine.net, or from @MCPE_moodder_for_maps at http://minecraftforum.net
@@ -12,6 +13,7 @@ interface HubInterface{
 	public function getPlayersList();
 	public function pmPlayerEvt($evt, Player $player, $data);
 	public function cmdHandler($cmd, $args, $issuer);
+	public function __toString();//return getName()
 }
 
 interface MinigameTournament{
