@@ -1,12 +1,19 @@
 <?php
+
 /*
 __PocketMine Plugin__
-name=PvpMgPlugin
+name=PvP_minigame
 author=PEMapModder
 version=1.0
 apiversion=11,12
 class=PvpHubInterface
 */
+
+/*
+Copyright © PEMapModder 2014
+This software can only be used with prior permission from @PEMapModder at https://github.com or http://forums.pocketmine.net, or from @MCPE_moodder_for_maps at http://minecraftforum.net
+*/
+
 class TooSimpleKillCounter implements Plugin{
 	private $players=array(), $plusPlayers=array(), $normHeal, $plusHealExtra, $vips=array(), $vipPlus=array (), $vipStars=array(), $staffs=array ();
 	public function __construct (ServerAPI $a, $s=0){}
