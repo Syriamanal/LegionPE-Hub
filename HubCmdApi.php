@@ -10,7 +10,7 @@ class HubCmdApi{
 	public function __construct(){
 	}
 	public function init(){
-		ServerAPI::request()->addHandler("server.start", array($this, "initialize"), 101);
+		ServerAPI::request()->event("server.start", array($this, "initialize"));
 	}
 	public function __destruct(){
 		

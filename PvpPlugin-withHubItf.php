@@ -142,25 +142,26 @@ class PvpHubInterface implements HubInterface, Plugin{
 	}
 	public $clnts;
 	public function receivePlayerJoin(Player $p){
+		$this->clnts["$p"]=$p;
 		return $this->p->onSpawn($p);
 	}
 	public function getTnmtsCount(){
-		return 1;
+		return 2;
 	}
 	public function getName(){
 		return "PvP";
 	}
 	public function getWorldNames(){
-		return array("pvp");
+		return array("pvp_1","pvp_2");
 	}
 	public function getMaxPlayers(){
-		return 999;
+		return array(999,999);//each world
 	}
 	public function getPlayersList(){
 		return $this->clnts;
 	}
 	public function getJoinStatus(){
-		return "JOIN";
+		return array(array(true,"JOIN"), array(true,"JOIN"));
 	}
 	public function pmPlayerEvt($evt, Player $player, $data){
 		

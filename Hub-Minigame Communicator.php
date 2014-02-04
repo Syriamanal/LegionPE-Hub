@@ -64,7 +64,10 @@ class HubMgCom{
 				$this->plyrEvtToMg($data->entity->level, "forceQuit", $data);
 				//onForceQuit
 			break;case "player.death":
-				$this->plyrEvtToMg($data->entity->level
+				$this->plyrEvtToMg($data["player"]->entity->level, "die", $data["player"], array($data["cause"]));
+				$killer=$s->api->player->getByEID($data["cause"]);
+				if($killer instanceof Player)
+					$this->plyrEvtToMg($killer->entity->level, "kill", $killer, array($data["player"]));
 				//onItemDropped
 			break;case "player.move":
 				//onMove
@@ -81,8 +84,8 @@ class HubMgCom{
 		}
 		return !ModPE::$prvtDft;
 	}
-	public function registerCmd($cmd, $desc, $isWl){
-		
+	public function registerCmd($cmd, $desc, $power, $callback){
+		return ServerAPI::request()->api->cmd->registerCmd($cmd, $desc, $power, $callback);
 	}
 	public function registerMinigame(HubInterface $data){
 	 	self::$mgItfs[]=$data;
@@ -101,5 +104,26 @@ class HubMgCom{
 			}
 		}
 		return false;
+	}
+	public function getMinigameByName($name){
+		foreach($this->getAllMinigames() as $mg){
+			if(strtolower($mg->getName()) === strtolower($name))
+				return $mg;
+		}
+		return false;
+	}
+	function plyrEvtToMg(Level $level, $evt, Player $player, $data=array()){
+		$mg=$this->getMinigameByLevel($level);
+		if($mg instanceof HubInterface){
+			$mg->pmPlyrEvt($evt, $player, $data);
+		}
+		elseif($level->getName() === "world"){
+			if($evt==="useItem" and ($data[1] instanceof SignPostBlock)){
+				$t=ServerAPI::request()->api->tile->get($data[1])->data;
+				if(substr($t["Text1"], 0, 1).substr($t["Text1"], -1) === "[]"){
+					HubMasterPlugin::get()->onTapSign($player, $data[1]);
+				}
+			}
+		}
 	}
 }

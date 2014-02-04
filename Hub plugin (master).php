@@ -23,7 +23,9 @@ class HubMasterPlugin implements Plugin{
 	public static function get(){
 		return self::$inst;
 	}
-	public function __construct(ServerAPI $a, $s=0){}
+	public function __construct(ServerAPI $a, $s=0){
+		ServerAPI::request()->event("server.start", array($this,"setupSigns"));
+	}
 	public function __destruct(){
 		
 	}
@@ -50,5 +52,22 @@ class HubMasterPlugin implements Plugin{
 			return $this->com->getMinigameByLevel($p->entity->level);
 		}
 		return false;
+	}
+	public function setupSigns(){
+		$tileApi=ServerAPI::request()->api->tile;
+		$pvpEnterSign=$tileApi->get(HubData::$pvpEnterSign);
+		
+	}
+	public function updateSigns(){
+		$mgs=$this->com->getAllMinigames();
+	}
+	public function onTapSign(Player $player, Position $pos){
+		if($pos->level->getName()==="world"){
+			$pvp=HubData::$pvpEnterSign;
+			if($pos->x===$pvp->x and $pos->y===$pvp->y and $pos->z===$pvp->z){
+				$mg=$this->com->get("pvp");
+				
+			}
+		}
 	}
 }
