@@ -14,8 +14,12 @@ Copyright © PEMapModder 2014
 This software can only be used with prior permission from @PEMapModder at https://github.com or http://forums.pocketmine.net, or from @MCPE_moodder_for_maps at http://minecraftforum.net
 */
 
+define("HUB_SIGN_UPDATE_INTERVAL", 5*20);
 class HubMasterPlugin implements Plugin{
 	private static $inst;
+	private $preInit=true;
+	private $signs=array();
+	// each => array(Tile, HubInterface)
 	private $com;
 	private static function setInstance(Plugin $i){
 		self::$inst=$i;
@@ -32,6 +36,7 @@ class HubMasterPlugin implements Plugin{
 	public function init(){
 		self::setInstance($this);
 		$this->com=new HubMgCom();//now, let's worry about whether this is set correctly.
+		$this->setupSigns();
 		ServerAPI::request()->api->loadAPI("ranks", "HubRanksApi", FILE_PATH."plugins/");
 		ServerAPI::request()->api->loadAPI("cmd", "HubCmdApi", FILE_PATH."plugins/");
 		ServerAPI::request()->addHandler("player.spawn", array($this, "initPlayer"), 3);
@@ -55,11 +60,21 @@ class HubMasterPlugin implements Plugin{
 	}
 	public function setupSigns(){
 		$tileApi=ServerAPI::request()->api->tile;
-		$pvpEnterSign=$tileApi->get(HubData::$pvpEnterSign);
-		
+		foreach($this->com->getAllMinigames() as $mg){
+			$count=count($mg->getWorldNames());
+			$signs=LegionPEData::getSigns($mg->getName(), $count);
+			$tiles=array();
+			foreach($signs as $sign)
+				$tiles[]=$tileApi->get($sign);
+			foreach($tiles as $key=>$tile){
+				$tile->setText("[".$mg->getJoinStatus()[$key]."]", count($mg->getPlayerList()[$key])."/".$mg->getMaxPlayers(), ($mg->isJoinable() and $mg->getMaxPlayers()<=count($mg->getPlayerList()[$key]))?"TAP ME TO JOIN!":"CAN'T JOIN : (");
+				$this->signs[$mg->getName()][$key]=$tile;
+			}
+		}
 	}
 	public function updateSigns(){
-		$mgs=$this->com->getAllMinigames();
+		$this->setupSigns();
+		ServerAPI::request()->schedule(HUB_SIGN_UPDATE_INTERVAL, array($this, "updateSigns"));
 	}
 	public function onTapSign(Player $player, Position $pos){
 		if($pos->level->getName()==="world"){

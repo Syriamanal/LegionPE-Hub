@@ -23,3 +23,8 @@ class HubData{
 	public static $chooseTeamLime=new Position(
 		 	 	163, 48, 69, ServerAPI::request()->api->level->get("world"));
 }
+class LegionPEData{
+	public function getSigns($name, $count){
+		// TODO
+	}
+}
