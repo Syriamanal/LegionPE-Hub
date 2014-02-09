@@ -7,8 +7,8 @@
 ```
 
 ##TODOs
-* implement dynamic signs - 60% done: dynamic done, tapAction TODO HIGH PRIORITY
-* - LegionPEData getSign() function BOUND WITH DST
-* pvp plugin - midlower priority
+* implement dynamic signs - 80% done: dynamic done, tapAction TODO HIGH PRIORITY
+ * LegionPEData getSign() function TODO MIDHIGH PRIORITYLAMBO?
+* pvp plugin - midlower priority - 40% done: world reproducer done
 ##Plans
 * experimental SQLite3 usage
