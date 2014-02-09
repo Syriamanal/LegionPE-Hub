@@ -70,13 +70,19 @@ class HubMgCom{
 					$this->plyrEvtToMg($killer->entity->level, "kill", $killer, array($data["player"]));
 				//onItemDropped
 			break;case "player.move":
+				$this->plyrEvtToMg($data->entity->level, "move", $data);
 				//onMove
 			break;case "tile.update":
+				$this->plyrEvtToMg($data->level, "postPlaceSign", $s->api->player->get($data->data["creator"]), $data);
 				//onPostPlaceSign
 			//entity-related
 			case "entity.health.change":
+				$testPlayer=$s->api->player->getByEID($data["eid"]);
+				if($testPlayer instanceof Player and $s->api->player->getByEID($data["cause"])===false)
+					$this->plyrEvtToMg($testPlayer->entity->level, "beHurt", $testPlayer, $data["cause"]);
 				//onHurt
 			break;case "entity.explosion":
+				$this->evtToMg();
 				//onExplode
 			break;case "item.drop":
 				//onItemDropped
@@ -112,18 +118,22 @@ class HubMgCom{
 		}
 		return false;
 	}
-	function plyrEvtToMg(Level $level, $evt, Player $player, $data=array()){
+	protected function plyrEvtToMg(Level $level, $evt, Player $player, $data=array()){//well yeah why did I split this function independently? // oh yeah I remember. For the idea of PlayerAssistant
 		$mg=$this->getMinigameByLevel($level);
 		if($mg instanceof HubInterface){
 			$mg->pmPlyrEvt($evt, $player, $data);
 		}
-		elseif($level->getName() === "world"){
-			if($evt==="useItem" and ($data[1] instanceof SignPostBlock)){
-				$t=ServerAPI::request()->api->tile->get($data[1])->data;
-				if(substr($t["Text1"], 0, 1).substr($t["Text1"], -1) === "[]"){
-					HubMasterPlugin::get()->onTapSign($player, $data[1]);
-				}
-			}
+		else{
+			HubMasterPlugin::get()->plyrEvt($level, $evt, $player, $data);
+		}
+	}
+	protected function evtToMg(Level $level, $evt, $data=array()){
+		$mg=$this->getMinigameByLevel($level);
+		if($mg instanceof HubInterface){
+			$mg->pmEvt($evt, $data);
+		}
+		else{
+			HubMasterPlugin::get()->evt($level, $evt, $data);
 		}
 	}
 }

@@ -78,10 +78,10 @@ class HubMasterPlugin implements Plugin{
 	}
 	public function onTapSign(Player $player, Position $pos){
 		if($pos->level->getName()==="world"){
-			$pvp=HubData::$pvpEnterSign;
-			if($pos->x===$pvp->x and $pos->y===$pvp->y and $pos->z===$pvp->z){
-				$mg=$this->com->get("pvp");
-				
+			foreach($this->signs as $mgName=>$tiles){
+				foreach($tiles as $tile){
+					
+				}
 			}
 		}
 	}

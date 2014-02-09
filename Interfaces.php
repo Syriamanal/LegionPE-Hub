@@ -10,9 +10,10 @@ interface HubInterface{
 	public function getWorldNames();//below counts must be equal to this count
 	public function getMaxPlayers();
 	public function getJoinStatus();
-	public function getPlayersList();
+	public function getPlayerList();
+	public function onPlayerJoin(Player $player, $worldName);
 	public function pmPlayerEvt($evt, Player $player, $data);
-	public function cmdHandler($cmd, $args, $issuer);
+	public function pmEvt($evt, $data);
 	public function __toString();//return getName()
 }
 
@@ -34,8 +35,12 @@ class PlayerProfile extends Config{
 		parent::__construct(FILE_PATH."players_databases/".strtolower(substr("$p", 0, 1))."/".strtolower("$p")."/$filename.yml", CONFIG_YAML, array());
 		$this->player=$p;
 		$this->addConstructs();
+		if($filename=="profile"){
+			$this->set("team", MgTool::getTeam(p));
+			$this->set("points", 0);
+		}
 	}
-	public function addConstructs(){
+	private function addConstructs(){
 		if(!is_numeric($this->get("constructs"))){
 			$this->set("constructs", 0);
 			return false;
@@ -45,9 +50,27 @@ class PlayerProfile extends Config{
 	public function getFile(){
 		return $this->file;
 	}
-	public function setMinigameData(HubInterface $hi, $name, $data){
+	public function setMgData(HubInterface $hi, $name, $data){
 		$d=$this->get($hi->getName());
-		$d["$name"]
+		$d["$name"]=$data;
+		$this->set($hi->getName(), $d);
+	}
+	public function getMgData(HubInterface $hi, $name){
+		return $this->get($hi->getName())["$name"];
+	}
+	public function getMgDataAll(HubInterface $hi){
+		return $this->get($hi->getName());
+	}
+	public function addPoints($points=10){
+		$pts=$this->get("points");
+		$pts+=$points;
+		$this->set("points", $pts);
+	}
+	public function takePoints($points=10){
+		$this->addPoints($points*-1);
+	}
+	public function getPoionts(){
+		return $this->get("points");
 	}
 }
 

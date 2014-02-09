@@ -25,6 +25,36 @@ class HubData{
 }
 class LegionPEData{
 	public function getSigns($name, $count){
-		// TODO
+		switch(strtolower($name)){
+		case "pvp":
+			$pos=array(HubData::$pvpSignStart, HubData::$pvpSignEnd);
+			break;
+		case "cnr":
+			$pos=array(HubData::$cnrSignStart, HubData::$cnrSignStart);
+			break;
+		case "spleef":
+			$pos=array(HubData::$spleefSignStart, HubData::$spleefSignEnd);
+			break;
+		case "pk":
+			$pos=array(HubData::$pkSignStart, HubData::$pkSignEnd);
+		}
+		if(!isset($pos))return false;
+		$height=abs($pos[0]->y-$pos[1]->y+1);
+		$mod=$count%$height;
+		$count-=$mod;
+		$dc=(($pos[0]->x==$pos[1]->x)?"z":"x");
+		$requiredWidth=$count/$height;
+		if($requiredWidth%2===1){//easy
+			$mid=($requiredWidth-1)/2;
+			$start=min($pos[0]->$dc, $pos[1]->$dc);
+			$end=max($pos[0]->$dc, $pos[1]->$dc);
+			$mid+=$start;
+		}
+		else{//hard
+			
+		}
+//	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#
+//	#	#	#	#	#	#	#	x	#	#	#	#	#	#	#
+//	#	#	#	#	#	#	#	#	#	#	#	#	#	#	#
 	}
 }
