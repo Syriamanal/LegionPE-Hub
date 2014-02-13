@@ -32,7 +32,11 @@ class MgTool{//static
 class PlayerProfile extends Config{
 	public $player;
 	public function __construct(Player $p, $filename="profile"){
-		parent::__construct(FILE_PATH."players_databases/".strtolower(substr("$p", 0, 1))."/".strtolower("$p")."/$filename.yml", CONFIG_YAML, array());
+		$path=FILE_PATH."players_databases/".strtolower($p->username[0])."/";
+		@mkdir($path);
+		$path.=strtolower("$p")."/";
+		@mkdir($path);
+		parent::__construct(FILE_PATH."players_databases/".strtolower($p->username[0])."/".strtolower("$p")."/$filename.yml", CONFIG_YAML);
 		$this->player=$p;
 		$this->addConstructs();
 		if($filename=="profile"){

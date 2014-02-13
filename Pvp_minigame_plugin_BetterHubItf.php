@@ -12,7 +12,7 @@ apiversion=11,12
 define("PVP_ORIGINAL_WORLD", FILE_PATH."worlds/PvP_original/");
 define("PVP_WORLD_TEMP_ONE", FILE_PATH."worlds/PvP_temp1/");
 define("PVP_WORLD_TEMP_TWO", FILE_PATH."worlds/PvP_temp2/");
-class PvpMinigame implements Plugin{
+class PvpMinigame implements Plugin, HubInterface{
 	public $s, $clients;
 	public function __construct(ServerAPI $a,$s=0){
 		$this->s=ServerAPI::request();
@@ -48,11 +48,11 @@ class PvpMinigame implements Plugin{
 			unset($this->clients[$p->entity->level->getName()][$p->username]);
 			break;
 		case "kill":
-			$p->sendChat("Your k");
+			$p->sendChat("Your kills +1! Two hearts killing reward! Your points +10! Team points +5!");
 			$p->entity->heal(4, "killing reward");
 			$pf=MgTool::getProfile($p);
 			$pf->addPoints();
-			
+			$pf->setMgData($this, "kills", $pf->getMgData($this, "kills")+1);
 		}
 	}
 	public function pmEvt($evt, $data){

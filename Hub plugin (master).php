@@ -19,8 +19,9 @@ class HubMasterPlugin implements Plugin{
 	private static $inst;
 	private $preInit=true;
 	private $signs=array();
+	public $playerProfiles;
 	// each => array(Tile, HubInterface)
-	private $com;
+	public $com;
 	private static function setInstance(Plugin $i){
 		self::$inst=$i;
 	}
@@ -29,6 +30,7 @@ class HubMasterPlugin implements Plugin{
 	}
 	public function __construct(ServerAPI $a, $s=0){
 		ServerAPI::request()->event("server.start", array($this,"setupSigns"));
+		@mkdir(FILE_PATH."players_databases/");
 	}
 	public function __destruct(){
 		
@@ -39,11 +41,17 @@ class HubMasterPlugin implements Plugin{
 		$this->setupSigns();
 		ServerAPI::request()->api->loadAPI("ranks", "HubRanksApi", FILE_PATH."plugins/");
 		ServerAPI::request()->api->loadAPI("cmd", "HubCmdApi", FILE_PATH."plugins/");
+		ServerAPI::request()->api->loadAPI("team", "HubTeamApi", FILE_PATH."plugins/");
 		ServerAPI::request()->addHandler("player.spawn", array($this, "initPlayer"), 3);
 		ServerAPI::request()->addHandler("player.quit", array($this, "finalizePlayer"), 7);
 	}
 	public function initPlayer(Player $p){
-		$this->playerProfiles["$p"]=new PlayerProfile($p);
+		if(file_exists(FILE_PATH."players_databases/".strtolower($p->username[0])."/".strtolower("$p")."/profile.yml")){
+			
+		}else{
+			
+		}
+		$this->playerProfiles["$p"]=new PlayerProfile($p, "profile", 3);
 	}
 	public function finalizePlayer(Player $p){
 		unset($this->playerProfiles["$p"]);
