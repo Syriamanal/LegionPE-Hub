@@ -9,6 +9,11 @@ version=0
 apiversion=11,12
 */
 
+/*
+Copyright © PEMapModder 2014
+This software can only be used with prior permission from @PEMapModder at https://github.com or http://forums.pocketmine.net, or from @MCPE_moodder_for_maps at http://minecraftforum.net
+*/
+
 define("PVP_ORIGINAL_WORLD", FILE_PATH."worlds/PvP_original/");
 define("PVP_WORLD_TEMP_ONE", FILE_PATH."worlds/PvP_temp1/");
 define("PVP_WORLD_TEMP_TWO", FILE_PATH."worlds/PvP_temp2/");
