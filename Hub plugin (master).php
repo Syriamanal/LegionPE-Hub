@@ -18,7 +18,7 @@ define("HUB_SIGN_UPDATE_INTERVAL", 5*20);
 class HubMasterPlugin implements Plugin{
 	private static $inst;
 	private $preInit=true;
-	private $signs=array();
+	// private $signs=array();
 	public $playerProfiles;
 	// each => array(Tile, HubInterface)
 	public $com;
@@ -75,8 +75,12 @@ class HubMasterPlugin implements Plugin{
 			foreach($signs as $sign)
 				$tiles[]=$tileApi->get($sign);
 			foreach($tiles as $key=>$tile){
-				$tile->setText("[".$mg->getJoinStatus()[$key]."]", count($mg->getPlayerList()[$key])."/".$mg->getMaxPlayers(), ($mg->isJoinable() and $mg->getMaxPlayers()<=count($mg->getPlayerList()[$key]))?"TAP ME TO JOIN!":"CAN'T JOIN : (");
-				$this->signs[$mg->getName()][$key]=$tile;
+				$tile->setText(
+					"[".$mg->getJoinStatus()[$key]."]",//[join status]
+					count($mg->getPlayerList()[$key])."/".$mg->getMaxPlayers(),//number of slots
+					($mg->isJoinable() and $mg->getMaxPlayers()<=count($mg->getPlayerList()[$key]))?"TAP ME TO JOIN!":"CAN'T JOIN :(",
+					$mg->getWorldNames()[$key]);//joinability
+				// $this->signs[$mg->getName()][$key]=$tile;
 			}
 		}
 	}
@@ -86,11 +90,11 @@ class HubMasterPlugin implements Plugin{
 	}
 	public function onTapSign(Player $player, Position $pos){
 		if($pos->level->getName()==="world"){
-			foreach($this->signs as $mgName=>$tiles){
-				foreach($tiles as $tile){
-					
-				}
-			}
+			$lines=ServerAPI::request()->api->tile->get($pos)->data;
+			$mg=LegionPEData::getMg($pos);
+			$success=$mg->onPlayerJoin($player, $lines["Text4"]);
 		}
 	}
+	public function plyrEvt(){}
+	public function evt(){}
 }

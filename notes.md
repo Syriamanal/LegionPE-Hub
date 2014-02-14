@@ -11,4 +11,4 @@
  * LegionPEData getSign() function TODO MIDHIGH PRIORITYLAMBO?
 * pvp plugin - midlower priority - 40% done: world reproducer done
 ##Plans
-* experimental SQLite3 usage
+* cancelled--experimental SQLite3 usage-- cancelled

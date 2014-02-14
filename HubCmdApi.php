@@ -110,7 +110,7 @@ class HubCmdApi{
 		else{
 			foreach($this->cmds as $cmd=>$categs){
 				foreach($categs as $categ=>$data){
-					$cmdList=($categ==="public"?"":"In minigame $categ,\n    Usage: ")."/$cmd ".$data[0];
+					$cmdList[]=($categ==="public"?"":"In minigame $categ,\n    Usage: ")."/$cmd ".$data[0];
 				}
 			}
 		}
