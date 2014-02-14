@@ -17,7 +17,8 @@ class HubCmdApi{
 		
 	}
 	public function initialize(){
-		$c=($s=ServerAPI::request())->api->console;
+		$s=ServerAPI::request();
+		$c=$s->api->console;
 		foreach($c->cmds as $cmd=>$callback)
 			if($cmd==="help")$cb=array($this,"helper");//idk if this will change the default. (It doesn't matter though, I just realized)
 			else $cb=$callback;

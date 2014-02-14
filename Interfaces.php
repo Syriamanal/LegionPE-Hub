@@ -27,6 +27,7 @@ class MgTool{//static
 	}
 	public static function getProfile($p){
 		return HubMasterPlugin::get()->getProfile("$p");
+	}
 }
 
 class PlayerProfile extends Config{

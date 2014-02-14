@@ -16,7 +16,7 @@ class HubRanksApi{
 		$this->db=new Config($this->file, CONFIG_YAML, array("readme"=>"Repeated names will be ignored. Only first time will be read. Also, remember to write in lowercase.", "ranks"=>array("staffs"=>array("lambo", "spyduck", "pemapmodder", "mcpesrccode"), "vip starred"=>array("vip starred one", "vip starred two"), "vip plus"=>array("vip plus one", "vip plus two"), "vip standard"=>array("vip std 1", "vip std 2"))));
 	}
 	public function __destruct(){
-		$this->db->save();
+		@$this->db->save();
 	}
 	public function getPlayerRank($p){
 		if(strtolower($p)==="console" or strtolower($p)==="rcon"){//ban @console and @rcon
@@ -56,6 +56,6 @@ class HubRanksApi{
 	}
 	public function getPlayerRankIndex($p){
 		$p="$p";
-		return $this->getIndex($this->getPlayerRank)
+		return $this->getIndex($this->getPlayerRank);
 	}
 }
