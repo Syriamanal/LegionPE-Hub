@@ -6,5 +6,3 @@ class MinigameCom{
 		$this->hub = $hub;
 	}
 }
-
-?>

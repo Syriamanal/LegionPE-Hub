@@ -16,5 +16,3 @@ function hub_get_player_dir($ign){
 	$ign = trim_player_ign($ign);
 	return FILE_PATH."hub/players/".substr($ign, 0, 1)."/$ign/";
 }
-
-?>
