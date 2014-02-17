@@ -19,6 +19,10 @@ class MinigameCom{
 		$s->addHandler("entity.health.change", array($this, "pmEvt"));
 		$s->addHandler("console.command", array($this, "pmEvt"));
 		$s->addHandler("item.drop", array($this, "pmEvt"));
-		
+	}
+	public function pmEvt($data, $evt){
+		switch($evt){
+			
+		}
 	}
 }

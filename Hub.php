@@ -11,6 +11,9 @@ author=PEMapModder
 
 hub_require_all();
 class HubPlugin implements Plugin{
+	public static function request(){
+		return self::$instance;
+	}
 	private $api, $server;
 	public $mgCom, $pmCom;
 	public $playerProfiles = array();
@@ -36,6 +39,7 @@ class HubPlugin implements Plugin{
 		unset($this->playerProfiles[$ign]);
 	}
 	public function __construct(ServerAPI &$api, $server = 0){
+		self::$instance=$this;
 		$this->api =& $api;
 		$this->server =& ServerAPI::request();
 		$this->mkDirs();
