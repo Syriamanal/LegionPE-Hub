@@ -38,6 +38,11 @@ abstract class Minigame implements Plugin{ // Hub requires data from Minigame
 	 * @param Player $player the player to force-leave
 	*/
 	public abstract function onPlayerLeave(Player $player);
+	//////////////////////////////////GETTERS//////////////////////////////////
+	/**
+	 * @return string minigame name
+	*/
+	public abstract function getName();
 	/**
 	 * @return string[] an array of names of all worlds this minigame uses, including tournament usages
 	*/
@@ -52,11 +57,11 @@ abstract class Minigame implements Plugin{ // Hub requires data from Minigame
 	public abstract function getAllTournaments();
 }
 /*
-**DUMMY** __PocketMine Plugin__ **DUMMY**
+**DUMMY** __PocketMine*Plugin__ **DUMMY**
 **DUMMY** class=DummyMinigame **DUMMY**
 **DUMMY** name=DummyMinigame **DUMMY**
 **DUMMY** author=DummyMinigame **DUMMY**
-**DUMMY** apiversion=12,13 **DUMMY**
+**DUMMY** apiversion=12,*13 **DUMMY**
 **DUMMY** version=DummyVersion **DUMMY**
 */
 class DummyMinigame extends Minigame{

@@ -24,9 +24,18 @@ abstract class Tournnament{
 	public function getId(){
 		return $this->id;
 	}
-	public function getWorldName(){
+	public function getWorldNames(){
 		if(is_string($this->worldName))
 			return array($this->worldName);
 		return $this->worldName;
 	}
+	public abstract function playerReceiver(Player $player);
+	/**
+	 * @return int the max number of players to display on hub signs
+	*/
+	public abstract function getMaxPlayers();
+	/**
+	 * @return string[] an array of names of all players in this tournament
+	*/
+	public abstract function getPlayerNames();
 }

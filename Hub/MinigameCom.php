@@ -92,9 +92,23 @@ class MinigameCom{
 		}
 	}
 	protected function bpEvt($event, Player $player, $data=array()){
-		
+		return $this->bEvt($event, $player->entity->level, $data, $player);
 	}
-	protected function bEvt($event, Level $level, $data=array()){
-		
+	protected function bEvt($event, Level $level, $data=array(), $player=FALSE){
+		$mg = $this->getMinigameByLevel($level);
+		if($mg !== FALSE){
+			if($player !== FALSE)
+				return $mg->playerEvent($event, $player, $data);
+			return $mg->event($event, $data);
+		}
+	}
+	public function getMinigameByLevel($level){
+		foreach($this->minigames as $minigame){
+			foreach($minigame->getAllWorldNames() as $wn){
+				if($wn == "$level")
+					return $minigame;
+			}
+		}
+		return FALSE;
 	}
 }
