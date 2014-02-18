@@ -14,9 +14,7 @@ Copyright © 2014 PEMapModder
 This software should only be used with prior permission from:
   @PEMapModder from forums.pocketmine.net,
   @PEMapModder from github.com,
-  @MCPE_modder_for_maps from minecraftforum.net,
-  pemapmodder1970@gmail.com, or
-  any players logging into an MCPE server from IP 219.73.81.15 or eycraft.hopto.org
+  or @MCPE_modder_for_maps from minecraftforum.net
 Without permission, you are only expected to view this plugin and not to download AND save it, or to apply it in any PocketMine-MP servers.
 */
 
@@ -32,6 +30,8 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		$this->mgCom = new MinigameCom($this);
 		$this->mgCom->init();
 		$this->initEvents();
+		$this->cmdApi = new CmdApi();;
+		$this->cmdApi->init();
 	}
 	public function initEvents(){
 		$s =& $this->server;
@@ -48,6 +48,9 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		$ign = trim_player_ign($player);
 		$this->playerProfiles[$ign] = FALSE;
 		unset($this->playerProfiles[$ign]);
+	}
+	public function getProfile(Player $player){
+		return $this->playerProfiles[trim_player_ign($player)];
 	}
 	public function __construct(ServerAPI &$api, $server = 0){
 		self::$instance=$this;
