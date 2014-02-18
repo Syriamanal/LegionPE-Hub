@@ -1,12 +1,25 @@
 <?php
 
+/*
+Copyright © 2014 PEMapModder
+This software should only be used with prior permission from:
+  @PEMapModder from forums.pocketmine.net,
+  @PEMapModder from github.com,
+  @MCPE_modder_for_maps from minecraftforum.net,
+  pemapmodder1970@gmail.com, or
+  any players logging into an MCPE server from IP 219.73.81.15 or eycraft.hopto.org
+Without permission, you are only expected to view this plugin and not to download AND save it, or to apply it in any PocketMine-MP servers.
+*/
+
 class MinigameCom{
 	public $hub;
-	public function __construct(HubPlugin $hub){
+	public $minigames=array();
+	public function __construct(Hub $hub){
 		$this->hub = $hub;
 	}
 	public function init(){
 		$s = ServerAPI::request();
+		$s->addHandler("hub.minigame.register", array($this, "register"), 100);
 		$s->addHandler("player.block.touch", array($this, "pmEvt"));
 		$s->addHandler("player.chat", array($this, "pmEvt"));
 		$s->addHandler("player.move", array($this, "pmEvt"));
@@ -18,6 +31,10 @@ class MinigameCom{
 		$s->addHandler("entity.explosion", array($this, "pmEvt"));
 		$s->addHandler("entity.health.change", array($this, "pmEvt"));
 		$s->addHandler("item.drop", array($this, "pmEvt"));
+	}
+	public function register(Minigame $minigame){
+		$this->minigame[] = $minigame;
+		return $this->hub;
 	}
 	public function pmEvt($data, $evt){
 		$s = ServerAPI::request();
@@ -73,5 +90,11 @@ class MinigameCom{
 			case "item.drop":
 				return $this->bEvt("dropItem", $data["level"], array("pos"=>(new Position($data["x"], $data["y"], $data["z"], $data["level"])), "item"=>$data["item"]));
 		}
+	}
+	protected function bpEvt($event, Player $player, $data=array()){
+		
+	}
+	protected function bEvt($event, Level $level, $data=array()){
+		
 	}
 }

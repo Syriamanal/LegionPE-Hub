@@ -11,19 +11,22 @@ This software should only be used with prior permission from:
 Without permission, you are only expected to view this plugin and not to download AND save it, or to apply it in any PocketMine-MP servers.
 */
 
-class PlayerProfile extends Config{
-	public function __construct($ign, $filename = "main"){
-		$ign = trim_player_ign($ign);
-		parent::__construct(hub_get_player_dir($ign)."$filename.yml", CONFIG_YAML, array(
-			"statistics" => array(
-				
-			),
-			"personal points" => 0,
-			"team index" => -1
-		));
+abstract class Tournnament{
+	private $minigame, $id, $worldName;
+	public function __construct(Minigame $minigame, $id, $worldName){
+		$this->minigame = $minigame;
+		$this->id = $id;
+		$this->worldName = $worldName;
 	}
-}
-function hub_get_player_dir($ign){
-	$ign = trim_player_ign($ign);
-	return FILE_PATH."hub/players/".substr($ign, 0, 1)."/$ign/";
+	public function getMinigame(){
+		return $this->minigame;
+	}
+	public function getId(){
+		return $this->id;
+	}
+	public function getWorldName(){
+		if(is_string($this->worldName))
+			return array($this->worldName);
+		return $this->worldName;
+	}
 }

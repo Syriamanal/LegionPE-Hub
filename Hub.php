@@ -2,15 +2,26 @@
 
 /*
 __PocketMine Plugin__
-class=HubPlugin
+class=Hub
 name=LegionPE Hub
 version=beta 1.0
 apiversion=12
 author=PEMapModder
 */
 
+/*
+Copyright © 2014 PEMapModder
+This software should only be used with prior permission from:
+  @PEMapModder from forums.pocketmine.net,
+  @PEMapModder from github.com,
+  @MCPE_modder_for_maps from minecraftforum.net,
+  pemapmodder1970@gmail.com, or
+  any players logging into an MCPE server from IP 219.73.81.15 or eycraft.hopto.org
+Without permission, you are only expected to view this plugin and not to download AND save it, or to apply it in any PocketMine-MP servers.
+*/
+
 hub_require_all();
-class HubPlugin implements Plugin{
+class Hub implements Plugin{ // I really planned to use this class name, not any generic class name.
 	public static function request(){
 		return self::$instance;
 	}
