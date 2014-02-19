@@ -34,10 +34,14 @@ class CmdApi{
 		$this->cmds[$cmd][$categ] = array(
 			"callback" => $callback,
 			"usage" => $help,
-			"permission" => $minPErm
+			"permission" => $minPerm
 		);
 	}
 	public function run($cmd, $params, $issuer = "console"){
-		
+		if($cmd == "help"){
+			if($issuer instanceof Player)
+				$issuer->sendChat($this->help($params, $issuer));
+			else console(FORMAT_GREEN."[CMD] ".$this->help($params, $issuer));
+		}
 	}
 }
