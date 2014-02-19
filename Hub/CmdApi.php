@@ -22,7 +22,7 @@ class CmdApi{
 		}
 	}
 	public function evt($d){
-		$this->run($d["cmd"], $d["parameters"], $d["issuer"], $d["alias"]);
+		$this->run($d["cmd"], $d["parameters"], $d["issuer"]);
 	}
 	public function register($cmd, $help, $callback, $minPerm){
 		$cmd = strToLower(trim($cmd));
@@ -37,7 +37,7 @@ class CmdApi{
 			"permission" => $minPErm
 		);
 	}
-	public function run(){
-		//TODO run a command
+	public function run($cmd, $params, $issuer = "console"){
+		
 	}
 }
