@@ -25,7 +25,7 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		return self::$instance;
 	}
 	private $api, $server;
-	public $mgCom, $pmCom;
+	public $mgCom, $cmdApi, $ranksApi;
 	public $playerProfiles = array();
 	public function init(){
 		$this->mgCom = new MinigameCom($this);
@@ -33,6 +33,8 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		$this->initEvents();
 		$this->cmdApi = new CmdApi();;
 		$this->cmdApi->init();
+		$this->ranksApi = new RanksApi();
+		$this->ranksApi->init();
 	}
 	public function initEvents(){
 		$s =& $this->server;

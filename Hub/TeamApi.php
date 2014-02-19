@@ -15,8 +15,10 @@ class TeamApi{
 		$this->server = ServerAPI::request();
 	}
 	public function init(){
+		
 	}
 	public function evt($d){
+		
 	}
 	
 }

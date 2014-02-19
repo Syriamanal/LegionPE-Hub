@@ -11,6 +11,9 @@ Without permission, you are only expected to view this plugin and not to downloa
 
 class HubPos{
 	public static function getNewSpawn(){
-		return new Position();//TODO
+		return new Position($x, $y, $z, ServerAPI::request()->api->level->get($level_name));//TODO lambo
+	}
+	public static function getOldPlayerSpawn(){
+		return new Position($x, $y, $z, ServerAPI::request()->api->level->get($level_name));//TODO lambo
 	}
 }
