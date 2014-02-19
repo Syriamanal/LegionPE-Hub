@@ -43,5 +43,27 @@ class CmdApi{
 				$issuer->sendChat($this->help($params, $issuer));
 			else console(FORMAT_GREEN."[CMD] ".$this->help($params, $issuer));
 		}
+		if(!isset($this->cmds[$cmd]))
+			return $this->send("There is no such command /$cmd");
+		$c = $this->getCateg($issuer);
+		if(!isset($this->cmds[$cmd][$c])){
+			if(isset($this->cmds[$cmd]["public"]))
+				$c = "public";
+			else return $this->send("You cannot use this command in this minigame/area.");
+		}
+		$d = $this->cmds[$cmd][$c];
+		$p = $d["permission"];
+		if($p <= Hub::request()->ranksApi->getPerm($issuer))
+			$this->send(call_user_func($callback, $cmd, $params, $issuer), $issuer);;
+		else $this->send("You don't have permission to use this command /$cmd in this minigame/area.");
+	}
+	public function send($msg, $rcpt){
+		if($rcpt instanceof Player)
+			return $rcpt->sendChat($msg);
+		return console("[CMD] $msg");
+	}
+	public function getCateg($issuer){
+		$categ = (($issuer instanceof Player) and (($mg = Hub::request()->com->getMinigameByLevel($issuer->level)) instanceof Minigame));
+		return $categ ? $mg->getName() : "public";
 	}
 }
