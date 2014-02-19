@@ -21,6 +21,10 @@ abstract class Minigame implements Plugin{ // Hub requires data from Minigame
 	}
 	public abstract function __destruct();
 	public abstract function playerEvent($event, Player $player, $data=array());
+	protected function startTournament($id, $baseWorld, $tClass, $options = array(){
+		$this->tournaments[$id] = new $tClass($this, $id, $baseWorld, $options);
+		$this->tournaments[$id]->init();
+	}
 	/**
 	 * invoked when a non-player-related (or at least not directly) event occurs in one of the levels 
 	*/

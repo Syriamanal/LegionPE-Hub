@@ -11,10 +11,33 @@ Without permission, you are only expected to view this plugin and not to downloa
 
 abstract class Tournnament{
 	private $minigame, $id, $worldName;
-	public function __construct(Minigame $minigame, $id, $worldName){
+	public function __construct(Minigame $minigame, $id, $cloneWorld, $params = array()){
 		$this->minigame = $minigame;
 		$this->id = $id;
-		$this->worldName = $worldName;
+		$this->worldName = $cloneWorld;
+	}
+	public function init(){
+		$wn = FILE_PATH."worlds/".$this->worldName;
+		$this->copyDir($wn."/", $wn."_temp_".$this->id."/");
+		$this->worldName = $wn."_temp_".$this->id."/";
+		ServerAPI::request()->api->level->loadLevel($this->worldName);
+	}
+	public function __destruct(){
+		$path = explode("/", $this->worldName);
+		$wn = $path[count($path) - 1];
+		ServerAPI::request()->api->level->unloadLevel($wn);
+		unlink($this->worldName);
+	}
+	public function copyDir($old, $new){
+		$dir = dir($old);
+		while(($fn = $dir->read()) !== false){
+			if(is_file($old.$fn)){
+				file_put_contents($new.$fn, file_get_contents($old.$fn));
+			}elseif(is_dir($old.$fn) and strpos($fn, ".") === false)//TODO improve
+				$this->copyDir($old.$fn, $new.$fn);
+			}
+		}
+		return true;
 	}
 	public function getMinigame(){
 		return $this->minigame;
