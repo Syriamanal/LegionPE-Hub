@@ -9,14 +9,8 @@ This software should only be used with prior permission from:
 Without permission, you are only expected to view this plugin and not to download AND save it, or to apply it in any PocketMine-MP servers.
 */
 
-class TeamApi{
-	private $server;
-	public function __construct(){
-		$this->server = ServerAPI::request();
+class HubPos{
+	public static function getNewSpawn(){
+		return new Position();//TODO
 	}
-	public function init(){
-	}
-	public function evt($d){
-	}
-	
 }
