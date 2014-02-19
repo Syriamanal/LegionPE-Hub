@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright © 2014 PEMapModder
+Copyright  © 2014 PEMapModder
 This software should only be used with prior permission from:
   @PEMapModder from forums.pocketmine.net,
   @PEMapModder from github.com,
