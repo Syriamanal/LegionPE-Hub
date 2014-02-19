@@ -40,7 +40,18 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 	}
 	public function onSpawn(Player &$player){
 		$ign = trim_player_ign($player);
+		$isOld = file_exists(hub_get_player_dir($player->username));
 		$this->playerProfiles[$ign] = new PlayerProfile($ign);
+		if($isOld === false){
+			$pos = HubPos::getNewSpawn();
+			$player->teleport($pos);
+			$player->sendChat("Welcome to LegionPE!
+Use "/register <password>" to register your account.
+Then in here, tap a sign to select your team.
+Once you choose you cannot change it.
+If you insist to choose a particular team but cannot, come back later.");
+			//TODO Sign management
+		}
 	}
 	public function onQuit(Player &$player){
 		if(!isset($this->playerProfiles[trim_player_ign($player)]))
