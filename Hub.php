@@ -6,7 +6,7 @@ class=Hub
 name=LegionPE Hub
 version=beta 1.0
 apiversion=12
-author=PEMapModder
+author=PEMapModder and XKTiVerz
 */
 
 /*
