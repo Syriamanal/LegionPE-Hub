@@ -12,7 +12,7 @@ Without permission, you are only expected to view this plugin and not to downloa
 define("RANKS_GUEST", 0);
 define("RANKS_TRUST", 10);
 define("RANKS_CONSOLE", PHP_INT_MAX);
-define("RANKS_CONSOLE", PHP_INT_MAX - 2);
+define("RANKS_RCON", PHP_INT_MAX - 2);
 class RanksApi{
 	private $server;
 	public $config;
