@@ -4,6 +4,7 @@
 __PocketMine Plugin__
 class=Hub
 name=LegionPE Hub
+description=simple name, sophiscated plugin
 version=beta 1.0
 apiversion=12
 author=PEMapModder and XKTiVerz
