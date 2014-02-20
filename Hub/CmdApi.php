@@ -66,4 +66,20 @@ class CmdApi{
 		$categ = (($issuer instanceof Player) and (($mg = Hub::request()->com->getMinigameByLevel($issuer->level)) instanceof Minigame));
 		return $categ ? $mg->getName() : "public";
 	}
+	public function help($param, $issuer){
+		$ra = Hub::request()->ranksApi;
+		$categ = $this->getCateg($issuer);
+		if(!isset($param[0]))
+			$page = 1;
+		elseif(is_numeric($param[0]))
+			$page = (int)$param[0];
+		else{
+			return $this->helpCmd($param[0], $issuer);
+		}
+		ksort($this->cmds, SORT_NATURAL|SORT_FLAG_CASE);
+		$pages
+	}
+	public function helpCmd($cmd, $issuer){
+		
+	}
 }
