@@ -19,6 +19,7 @@ class AuthApi{
 				"default_allow_IP_auth" => FALSE, // can custom enable
 				"login_max_trials" => 5
 		));
+		define("HUB_AUTH_ALLOW_IP", $config->get("default_allow_IP_auth"));
 		define("HUB_AUTH_MAX_TRIALS", $config->get("login_max_trials"));
 		Hub::request()->cmdApi->register("auth", "<>", array($this, "cmd"));
 		$this->server = ServerAPI::request();
@@ -30,6 +31,16 @@ class AuthApi{
 		$p->blocked = TRUE;
 		$action = $isOld ? "login" : "register";
 		$p->sendChat("Welcome to LegionPE!");
+		$cfg = $this->getPlayerConfig($p);
+		$arr = $cfg->get("ip");
+		$savedArr = $arr;
+		$arr[$p->ip] = TRUE;
+		$cfg->set("ip", $arr);
+		$cfg->save();
+		if($cfg->get("do_ip_auth") === TRUE and isset($savedArr[$p->ip])){
+			$p->sendChat("You have logged in with your IP.");
+			return;
+		}
 		$p->sendChat("Please $action.");
 		if($isOld){
 			$toLogin[$p->username] = $p;
@@ -111,5 +122,11 @@ If you want to change, please contact Lambo or PEMapModder to unregister your ac
 				"true", "on", "yes", "ok", "go"
 		);
 		return in_array($str, $on);
+	}
+	private function getPlayerConfig($ign){
+		return new Config($this->getFile($ign).".cfg", CONFIG_YAML, array(
+			"do_ip_auth" => HUB_AUTH_ALLOW_IP,
+			"ip" => array ()
+		));
 	}
 }
