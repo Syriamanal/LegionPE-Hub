@@ -67,19 +67,9 @@ class CmdApi{
 		return $categ ? $mg->getName() : "public";
 	}
 	public function help($param, $issuer){
-		$ra = Hub::request()->ranksApi;
-		$categ = $this->getCateg($issuer);
-		if(!isset($param[0]))
-			$page = 1;
-		elseif(is_numeric($param[0]))
-			$page = (int)$param[0];
-		else{
-			return $this->helpCmd($param[0], $issuer);
-		}
-		ksort($this->cmds, SORT_NATURAL|SORT_FLAG_CASE);
-		$pages
+		//TODO I am not feeling comfortable today. I am not doing this.
 	}
 	public function helpCmd($cmd, $issuer){
-		
+		//TODO I am not feeling comfortable today. I am not doing this.
 	}
 }

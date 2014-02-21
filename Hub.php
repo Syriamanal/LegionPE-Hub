@@ -35,10 +35,12 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		$this->cmdApi->init();
 		$this->ranksApi = new RanksApi();
 		$this->ranksApi->init();
+		$this->authApi = new AuthApi();
+		$this->authApi->init();
 	}
 	public function initEvents(){
 		$s =& $this->server;
-		$s->addHandler("player.spawn", array($this, "onSpawn"));
+		$s->addHandler("player.auth", array($this, "onSpawn"));
 		$s->addHandler("player.quit", array($this, "onQuit"));
 	}
 	public function onSpawn(Player &$player){
