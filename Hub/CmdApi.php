@@ -54,7 +54,7 @@ class CmdApi{
 		$d = $this->cmds[$cmd][$c];
 		$p = $d["permission"];
 		if($p <= Hub::request()->ranksApi->getPerm($issuer))
-			$this->send(call_user_func($callback, $cmd, $params, $issuer), $issuer);;
+			$this->send(call_user_func($callback, $cmd, $params, $issuer), $issuer);
 		else $this->send("You don't have permission to use this command /$cmd in this minigame/area.");
 	}
 	public function send($msg, $rcpt){

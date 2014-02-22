@@ -35,7 +35,6 @@ abstract class Tournnament{
 				file_put_contents($new.$fn, file_get_contents($old.$fn));
 			}elseif(is_dir($old.$fn) and strpos($fn, ".") === false)//TODO improve
 				$this->copyDir($old.$fn, $new.$fn);
-			}
 		}
 		return true;
 	}

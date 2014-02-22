@@ -21,7 +21,7 @@ class AuthApi{
 		));
 		define("HUB_AUTH_ALLOW_IP", $config->get("default_allow_IP_auth"));
 		define("HUB_AUTH_MAX_TRIALS", $config->get("login_max_trials"));
-		Hub::request()->cmdApi->register("auth", "<>", array($this, "cmd"));
+		Hub::request()->cmdApi->register("auth", "<>", array($this, "cmd"), RANKS_GUEST);
 		$this->server = ServerAPI::request();
 		$this->server->addHandler("player.spawn", array($this, "onSpawn"), PHP_INT_MAX);
 		$this->server->addHandler("player.chat", array($this, "c"), PHP_INT_MAX);

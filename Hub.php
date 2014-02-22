@@ -21,6 +21,7 @@ Without permission, you are only expected to view this plugin and not to downloa
 
 hub_require_all();
 class Hub implements Plugin{ // I really planned to use this class name, not any generic class name.
+	private static $instance = FALSE;
 	public static function request(){
 		return self::$instance;
 	}
@@ -50,9 +51,8 @@ class Hub implements Plugin{ // I really planned to use this class name, not any
 		if($isOld === false){
 			$pos = HubPos::getNewSpawn();
 			$player->teleport($pos);
-			$player->sendChat("Welcome to LegionPE!
-Use "/register <password>" to register your account.
-Then in here, tap a sign to select your team.
+			$player->sendChat("Hello! Thanks for your first visit to LegionPE.
+In here, tap a sign to select your team.
 Once you choose you cannot change it.
 If you insist to choose a particular team but cannot, come back later.");
 			//TODO Sign management
@@ -68,10 +68,10 @@ If you insist to choose a particular team but cannot, come back later.");
 	public function getProfile(Player $player){
 		return $this->playerProfiles[trim_player_ign($player)];
 	}
-	public function __construct(ServerAPI &$api, $server = 0){
+	public function __construct(ServerAPI $api, $server = 0){
 		self::$instance=$this;
-		$this->api =& $api;
-		$this->server =& ServerAPI::request();
+		$this->api = $api;
+		$this->server = ServerAPI::request();
 		$this->mkDirs();
 	}
 	public function __destruct(){
