@@ -67,7 +67,7 @@ class CmdApi{
 		return $categ ? $mg->getName() : "public";
 	}
 	public function help($param, $issuer){
-		//TODO I am not feeling comfortable today. I am not doing this.
+            $data['player']->sendChat(" You must be op to use minigame commands!");
 	}
 	public function helpCmd($cmd, $issuer){
 		//TODO I am not feeling comfortable today. I am not doing this.
