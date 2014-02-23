@@ -29,6 +29,7 @@ class RanksApi{
 					"spyduck",
 					"pemapmodder",
 					"xktiverz"
+					"Syriamanal"
 				)
 		));
 		$this->ranks = new Config(FILE_PATH."ranks_values.yml", CONFIG_YAML, array(
